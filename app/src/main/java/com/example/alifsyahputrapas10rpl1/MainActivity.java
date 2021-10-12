@@ -10,6 +10,16 @@ import android.os.Bundle;
 import android.view.Window;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -49,5 +59,33 @@ public class MainActivity extends AppCompatActivity {
         data.add(new Data("Lea", "Nanti Mau Jalan Jam berapa bby?", R.drawable.lea));
         data.add(new Data("Jeha", "Lagi ngapain bby?", R.drawable.jeha));
         data.add(new Data("Lidiawati", "Bby lagi di rumah??", R.drawable.notnot));
+        
+        
+        
+        tampilandata();
+    }
+
+    private void tampilandata() {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url= "";
+        JSONObject jsonObject = new JSONObject();
+        final String requestBody = jsonObject.toString();
+        StringRequest StringRequest = new StringRequest();
+        Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response){
+            try {
+                JSONObject jo = new JSONObject(response.toString());
+
+            }catch (JSONException e){
+                e.printStackTrace();
+            }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorReponse(VolleyError error) {
+                Toast.makeText(MainActivity.this, "Gagal Ambil Rest API" + error, Toast.LENGTH_SHORT).show();
+            }
+        };
     }
 }
